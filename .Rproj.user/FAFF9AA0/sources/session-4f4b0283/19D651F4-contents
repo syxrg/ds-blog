@@ -1,0 +1,92 @@
+---
+title: "Largest Companies of USA"
+author: "Serena Gong"
+date: "2024-12-04"
+categories: [companies, data analysis, R]
+---
+
+![](thumbnail.jpg)
+
+Global companies vary widely in revenue and growth trajectories, raising the question of what factors drive revenue growth in the business world. In this post, I analyze the **Top Companies Dataset** to explore whether the **number of employees** and **industry type** influence revenue growth using a regression model and data visualization.
+
+The dataset includes key characteristics of the world’s largest companies, including their revenue, revenue growth, employee count, and industry type. This analysis focuses on understanding how **company size (employees)** and **industry** impact **revenue growth**.
+
+------------------------------------------------------------------------
+
+### **Data Preparation**
+
+To begin, I loaded and cleaned the dataset for analysis.
+
+```{r}
+#| echo: true
+#| message: false
+# Load libraries
+library(tidyverse)
+```
+
+```{r}
+#| echo: true
+#| message: false
+# Read the dataset
+companies <- read_csv("companies.csv")
+```
+
+```{r}
+# Data cleaning and transformations
+companies <- companies %>%
+  mutate(
+    revenue_usd_millions = parse_number(as.character(`Revenue (USD millions)`)),
+    revenue_growth = parse_number(as.character(`Revenue growth`)),
+    employees = parse_number(as.character(Employees))
+  )
+
+```
+
+------------------------------------------------------------------------
+
+### **Regression Analysis**
+
+```{r}
+# Fit a multiple regression model
+revenue_growth_model <- lm(revenue_growth ~ employees + Industry, data = companies)
+```
+
+```{r}
+
+# Display the summary of the regression model
+summary(revenue_growth_model)
+```
+Based on the multiple regression analysis, the model explores the impact of the number of employees and industry type on revenue growth. The results indicate that neither employees nor most industry types have statistically significant effects on revenue growth, as their p-values are generally greater than 0.05. The overall model explains about 41% of the variability in revenue growth (Multiple R-squared = 0.4144), but the adjusted R-squared (0.06488) suggests that the model's explanatory power diminishes when accounting for the number of predictors. This indicates that other factors may play a more substantial role in driving revenue growth among companies.
+
+------------------------------------------------------------------------
+
+### **Data Visualisation**
+
+I’ll use a bar plot to compare average revenue growth across different industries, highlighting which sectors experience the fastest growth.
+
+```{r}
+# Create a bar plot of average revenue growth by industry
+avg_growth_by_industry <- companies %>%
+  group_by(Industry) %>%
+  summarize(avg_growth = mean(revenue_growth, na.rm = TRUE))
+
+ggplot(avg_growth_by_industry, aes(x = reorder(Industry, avg_growth), y = avg_growth)) +
+  geom_bar(stat = "identity", fill = "skyblue") +
+  coord_flip() +
+  labs(
+    title = "Average Revenue Growth by Industry",
+    x = "Industry",
+    y = "Average Revenue Growth (%)"
+  ) +
+  theme_minimal()
+
+```
+
+This graph shows the average revenue growth by industry, providing valuable insights into how different sectors perform financially. Industries such as Financial Services, Financials, and Technology demonstrate the highest average revenue growth rates, indicating strong expansion and market potential. Conversely, industries like Chemical Industry, Energy Trading, and Petroleum Industry show negative average revenue growth, highlighting potential challenges or downturns in these sectors. This visualization underscores the variability in revenue growth across industries, reflecting the influence of market trends, demand, and economic conditions on sector performance.
+
+------------------------------------------------------------------------
+
+### **Conclusion**
+
+In this analysis, we explored the factors influencing revenue growth among the world’s top companies. A regression model revealed that neither the number of employees nor most industries had a statistically significant impact on growth, suggesting other factors may play a more substantial role. However, a closer look at industries highlighted significant variability, with Financial Services and Technology leading in average revenue growth, while sectors like Chemical Industry and Petroleum Industry faced declines. These findings emphasize the complexity of revenue growth dynamics, driven by a combination of sector-specific trends and broader economic forces. Future analyses could integrate additional variables, such as regional factors or market share, to deepen insights into company performance.
+

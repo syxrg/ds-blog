@@ -1,0 +1,2 @@
+"0","# Fit a multiple regression model"
+"0","revenue_growth_model <- lm(revenue_growth ~ employees + Industry, data = companies)"

@@ -1,0 +1,17 @@
+"0","#| echo: true"
+"0","#| message: false"
+"0","#| warning: false"
+"0","# Read the dataset"
+"0","pixar_movies <- read_csv(""pixar_movies.csv"")"
+"1","[1mRows: [22m[34m28[39m [1mColumns: [22m[34m16[39m
+"
+"1","[36m──[39m [1mColumn specification[22m [36m───────────────────────────────────────────────────────────────────────────[39m
+[1mDelimiter:[22m "",""
+[31mchr[39m  (13): movie, plot_summary, director, writer, main_characters, type_of_characters, main_voi...
+[32mdbl[39m   (2): year_released, length_min
+[34mdate[39m  (1): date_released
+"
+"1","
+[36mℹ[39m Use `spec()` to retrieve the full column specification for this data.
+[36mℹ[39m Specify the column types or set `show_col_types = FALSE` to quiet this message.
+"

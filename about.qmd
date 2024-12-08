@@ -1,0 +1,21 @@
+---
+title: "About"
+image: profile.jpg
+about:
+  template: jolla
+  links:
+    - icon: linkedin
+      text: LinkedIn
+      href: https://linkedin.com
+    - icon: github
+      text: Github
+      href: https://github.com
+
+---
+
+Hi! My name is Serena, and I'm currently a Computer Science and Astronomy student at the University of Illinois Urbana-Champaign. I'm passionate about web development and data science, with a focus on creating beautiful user-friendly applications and extracting insights from data.
+
+I enjoy working on creative projects, such as building interactive dashboards, visualizing data, and working on user interfaces. In my free time, I enjoy travelling and explore food from different cultures! I love the winter months as I'm an avid skier and look forward to the snow every year. 
+
+Some cool projects I've built include developing Celestial Insights, a data visulisation project that used Shiny for Python to analyze stars and constellations. I've also helped create iOS widgets to improved user engagement during my internship at Fusion Medical Staffing. At UIUC, I took INFO490 to work on the redesign of the Playful by Design Symposium website to enhance user experience and accessibility. 
+

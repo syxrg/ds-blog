@@ -1,0 +1,8 @@
+"0","# Data cleaning and transformations"
+"0","companies <- companies %>%"
+"0","  mutate("
+"0","    revenue_usd_millions = parse_number(as.character(`Revenue (USD millions)`)),"
+"0","    revenue_growth = parse_number(as.character(`Revenue growth`)),"
+"0","    employees = parse_number(as.character(Employees))"
+"0","  )"
+"0",""

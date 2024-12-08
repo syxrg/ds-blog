@@ -1,0 +1,5 @@
+"0","#| echo: true"
+"0","#| message: false"
+"0","#| warning: false"
+"0","# Convert sales columns to numeric"
+"0","pixar_movies <- pixar_movies %>% mutate( total_worldwide_gross_sales = parse_number(total_worldwide_gross_sales), rotten_tomatoes_rating = parse_number(rotten_tomatoes_rating) )"

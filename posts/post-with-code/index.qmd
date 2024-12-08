@@ -1,0 +1,129 @@
+---
+title: "Pixar Movies: Data Analysis"
+author: "Serena Gong"
+date: "2024-12-07"
+categories: [movies, data analysis, R]
+image: "pixar.jpg"
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+![](pixar.jpg)
+
+Pixar movies are some of my favourites of all time due to the great
+storyline, memorable characters, and beautiful animations. In this post,
+I will be analyzing the **Pixar Movies Dataset** from Kaggle. While I’ve
+enjoyed every Pixar movie, I’m curious to explore whether professional
+audience reception, as reflected by Rotten Tomatoes critics, impacts
+their financial success. My hypothesis is that a higher Rotten Tomatoes score correlates with higher gross revenue, as it’s reasonable to assume that professional acclaim attracts larger audiences
+
+### Dataset
+
+The dataset comes from
+[Kaggle](https://www.kaggle.com/datasets/rummagelabs/pixar-movies) and
+includes information about Pixar movies, such as release dates,
+runtimes, directors, box office revenue, Rotten Tomatoes ratings, and
+IMDb scores. This analysis focuses on understanding the relationship
+between **Rotten Tomatoes ratings** and **total worldwide gross sales**.
+
+------------------------------------------------------------------------
+
+### **Analysis**
+
+I'll start by loading the dataset and performing an initial exploration.
+
+```{r}
+#| echo: true
+#| message: false
+#| warning: false
+# Load libraries 
+library(tidyverse)
+library(ggplot2)
+library(knitr)
+library(kableExtra)
+```
+
+```{r}
+#| echo: true
+#| message: false
+#| warning: false
+# Read the dataset
+pixar_movies <- read_csv("pixar_movies.csv")
+```
+I need to format the data using mutate so that it can be used properly.
+```{r}
+#| message: false
+#| warning: false
+# Convert sales columns to numeric
+pixar_movies <- pixar_movies %>% mutate( total_worldwide_gross_sales = parse_number(total_worldwide_gross_sales), rotten_tomatoes_rating = parse_number(rotten_tomatoes_rating) )
+```
+
+Finally, I will do some basic calculations to get an idea of the ratings and sales of Pixar movies.
+```{r}
+# Summary statistics
+summary_stats <- pixar_movies %>% 
+  summarize(
+    total_movies = n(),
+    avg_rating = mean(rotten_tomatoes_rating, na.rm = TRUE),
+    avg_gross_sales = mean(total_worldwide_gross_sales, na.rm = TRUE),
+    max_gross_sales = max(total_worldwide_gross_sales, na.rm = TRUE),
+    movie_with_max_sales = movie[which.max(total_worldwide_gross_sales)],
+    rating_of_max_sales_movie = rotten_tomatoes_rating[which.max(total_worldwide_gross_sales)]
+  )
+
+# Display the summary statistics as a formatted table
+summary_stats %>%
+  kable(
+    col.names = c(
+      "Total Movies",
+      "Avg. Rating (%)",
+      "Avg. Gross ($M)",
+      "Max. Gross ($M)",
+      "Highest-Grossing Movie",
+      "Rating of Highest-Grossing Movie (%)"
+    ),
+    format = "html"
+  ) %>%
+  kable_styling(full_width = FALSE, bootstrap_options = c("striped", "hover", "condensed"))
+```
+
+From this, I can infer that Pixar has released 28 movies, with an average of 88.4% rating on Rotten Tomatoes and average of \$395 million in worldwide gross sales. Finding Nemo stands out as the highest-grossing film, earning \$942 million, which aligns with my hypothesis that higher Rotten Tomatoes scores lead to higher gross revenue, as it has a 99% approval rating.
+
+------------------------------------------------------------------------
+
+### **Visualisation**
+
+Next, I’ll create a scatter plot to explore the relationship between Rotten Tomatoes ratings and worldwide gross sales. A scatter plot is ideal for this analysis because it visually represents the relationship between two numerical variables, allowing us to observe patterns, trends, and potential outliers.
+
+To better understand the overall trend, I’ve added a linear regression line (in red) using the geom_smooth() function. This trend line helps to summarize the general direction of the relationship—whether it’s positive, negative, or neutral. By observing the distribution of points and the trend line, we can assess whether higher critical acclaim (Rotten Tomatoes ratings) is associated with increased financial success (worldwide gross sales).
+
+```{r}
+#| message: false
+# Create the scatter plot
+ggplot(pixar_movies, aes(x = rotten_tomatoes_rating, y = total_worldwide_gross_sales)) + geom_point(color = "blue", size = 3) + geom_smooth(method = "lm", se = FALSE, color = "red") + labs( title = "Relationship Between Rotten Tomatoes Ratings and Worldwide Gross Sales", x = "Rotten Tomatoes Rating (%)", y = "Total Worldwide Gross Sales ($ Millions)" ) + theme_minimal()
+```
+
+Interestingly, the plot reveals a slight negative correlation between Rotten Tomatoes ratings and worldwide gross sales, as suggested by the red trend line. This indicates that higher critic ratings do not necessarily result in higher revenue, and in some cases, there is even a weak negative relationship.
+
+There is also significant variation in gross sales across different ratings. For instance, some movies with very high ratings (close to 100%) achieved both high and low revenue, highlighting that factors beyond critical acclaim likely play a role in financial success. 
+
+Additionally, an outlier, likely Finding Nemo, stands out as a top-grossing movie despite being in the high rating range, further suggesting that other factors such as marketing, audience appeal, or franchise strength contribute to a movie’s success.
+
+Overall, this analysis challenges my hypothesis that higher Rotten Tomatoes scores directly lead to higher gross revenue.
+
+------------------------------------------------------------------------
+
+### **Conclusion**
+
+It seems like while Pixar movies are critically acclaimed with consistently high Rotten Tomatoes ratings, the analysis shows no strong correlation between ratings and financial success. Factors beyond critical reception, such as audience appeal, marketing, and franchise strength, likely play a significant role in driving box office revenue. This shows the complexity of predicting a movie’s financial performance based solely on critical reviews.
+
+
+
+
+
+
+
+
+
+
