@@ -3,7 +3,7 @@
     "path": "~/Desktop/IS407/blog/my-blog/posts/welcome/index.qmd",
     "project_path": "posts/welcome/index.qmd",
     "type": "quarto_markdown",
-    "hash": "3681546882",
+    "hash": "0",
     "contents": "",
     "dirty": false,
     "created": 1733637150380.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "91,0",
-        "scrollLine": "83"
+        "cursorPosition": "12,0",
+        "scrollLine": "0"
     },
     "folds": "",
-    "lastKnownWriteTime": 1733638119,
+    "lastKnownWriteTime": 1733679911,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1733638119360,
+    "last_content_update": 1733679911343,
     "read_only": false,
     "read_only_alternatives": []
 }

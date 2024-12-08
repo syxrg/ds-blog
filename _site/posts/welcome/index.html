@@ -190,12 +190,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p><img src="thumbnail.jpg" class="img-fluid"></p>
-<p>Global companies vary widely in revenue and growth trajectories, raising the question of what factors drive revenue growth in the business world. In this post, I analyze the <strong>Top Companies Dataset</strong> to explore whether the <strong>number of employees</strong> and <strong>industry type</strong> influence revenue growth using a regression model and data visualization.</p>
-<p>The dataset includes key characteristics of the world’s largest companies, including their revenue, revenue growth, employee count, and industry type. This analysis focuses on understanding how <strong>company size (employees)</strong> and <strong>industry</strong> impact <strong>revenue growth</strong>.</p>
+<p><img src="companies.jpg" class="img-fluid"></p>
+<p>While reading the news, I noticed that global companies vary widely in revenue and growth trajectories, so I’m curious to see what factors drive revenue growth in the business world. In this post, I’ll be analysing the <strong>Top Companies Dataset</strong> to explore whether number of employees and industry type influence revenue growth.</p>
 <hr>
-<section id="data-preparation" class="level3">
-<h3 class="anchored" data-anchor-id="data-preparation"><strong>Data Preparation</strong></h3>
+<section id="dataset" class="level3">
+<h3 class="anchored" data-anchor-id="dataset"><strong>Dataset</strong></h3>
+<p>The dataset comes from <a href="https://www.kaggle.com/datasets/batrosjamali/largest-companies-in-the-united-states-by-revenue">Kaggle</a> and includes key characteristics of the world’s largest companies, including their revenue, revenue growth, employee count, and industry type. This analysis focuses on understanding how <strong>company size (employees)</strong> and <strong>industry</strong> impact <strong>revenue growth</strong>.</p>
+</section>
+<section id="analysis" class="level3">
+<h3 class="anchored" data-anchor-id="analysis"><strong>Analysis</strong></h3>
 <p>To begin, I loaded and cleaned the dataset for analysis.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load libraries</span></span>
@@ -218,6 +221,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="regression-analysis" class="level3">
 <h3 class="anchored" data-anchor-id="regression-analysis"><strong>Regression Analysis</strong></h3>
+<p>I decided to use regression analysiss for this to combine the influence of multiple predictors on revenue growth. It allows us to quantify the relationships between these variables and identify whether they have significant impacts. By using multiple regression, I’ll be able to evaluate how much variability in revenue growth is explained by these factors and uncover insights into the dynamics driving financial performance across industries.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a multiple regression model</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>revenue_growth_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(revenue_growth <span class="sc">~</span> employees <span class="sc">+</span> Industry, <span class="at">data =</span> companies)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -326,7 +330,7 @@ F-statistic: 1.186 on 37 and 62 DF,  p-value: 0.2725</code></pre>
 </section>
 <section id="data-visualisation" class="level3">
 <h3 class="anchored" data-anchor-id="data-visualisation"><strong>Data Visualisation</strong></h3>
-<p>I’ll use a bar plot to compare average revenue growth across different industries, highlighting which sectors experience the fastest growth.</p>
+<p>I to use bar plots for visualisation as it can effectively compare average revenue growth across industries. They provide a clear and intuitive way to highlight differences, making it easy to identify which sectors are leading or lagging in growth. By ranking industries based on their average growth, I’ll be able to see a straightforward overview of sector-specific performance, helping to uncover trends that might not be immediately apparent from raw data or numerical summaries.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a bar plot of average revenue growth by industry</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>avg_growth_by_industry <span class="ot">&lt;-</span> companies <span class="sc">%&gt;%</span></span>
@@ -355,7 +359,7 @@ F-statistic: 1.186 on 37 and 62 DF,  p-value: 0.2725</code></pre>
 </section>
 <section id="conclusion" class="level3">
 <h3 class="anchored" data-anchor-id="conclusion"><strong>Conclusion</strong></h3>
-<p>In this analysis, we explored the factors influencing revenue growth among the world’s top companies. A regression model revealed that neither the number of employees nor most industries had a statistically significant impact on growth, suggesting other factors may play a more substantial role. However, a closer look at industries highlighted significant variability, with Financial Services and Technology leading in average revenue growth, while sectors like Chemical Industry and Petroleum Industry faced declines. These findings emphasize the complexity of revenue growth dynamics, driven by a combination of sector-specific trends and broader economic forces. Future analyses could integrate additional variables, such as regional factors or market share, to deepen insights into company performance.</p>
+<p>In this analysis, I explored 2 factors influencing revenue growth among the world’s top companies. My regression model revealed that neither the number of employees nor most industries had a statistically significant impact on growth, suggesting other factors may play a more substantial role. However, when I took a closer look at specific industries, it highlighted significant variability, with Financial Services and Technology leading in average revenue growth, while sectors like Chemical Industry and Petroleum Industry faced declines. These findings emphasize the complexity of revenue growth dynamics, driven by a combination of sector-specific trends and broader economic forces. Future analyses could integrate additional variables, such as regional factors or market share, to deepen insights into company performance.</p>
 
 
 </section>
@@ -442,7 +446,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
+      var filterRegex = new RegExp("https:\/\/syxrg\.quarto\.pub\/serenas-ds-blog");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
